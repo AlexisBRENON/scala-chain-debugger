@@ -1,3 +1,7 @@
+.gradle/
 .idea/
-target/
-project/
+.sandbox/
+build/
+
+test-project/.idea
+test-project/**/target

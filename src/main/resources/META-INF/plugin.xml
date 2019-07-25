@@ -1,0 +1,28 @@
+<idea-plugin>
+    <id>org.intellij.debugger.streams.scala</id>
+    <name>Scala chain debugger</name>
+    <vendor email="brenon.alexis+scala-stream-debugger"
+            url="https://github.com/AlexisBRENON/scala-chain-debugger">Alexis BRENON</vendor>
+
+    <description><![CDATA[
+    <h1>Scala Chain Debugger: <small>Debug chained calls in your Scala code</small></h1>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+    <depends>org.intellij.scala</depends>
+    <depends>org.jetbrains.debugger.streams</depends>
+
+    <extensions defaultExtensionNs="org.jetbrains.debugger.streams">
+        <!-- Add your extensions here -->
+        <librarySupport implementation="com.intellij.debugger.streams.scala.lib.sequence.ScalaSequenceSupportProvider"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+</idea-plugin>
