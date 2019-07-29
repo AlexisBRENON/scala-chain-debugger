@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="IDEA" type="Application" factoryName="Application">
+    <log_file alias="IDEA" path="/home/alexis/.ScalaChainDebuggerPluginIC/system/log/idea.log" />
+    <option name="MAIN_CLASS_NAME" value="com.intellij.idea.Main" />
+    <module name="idea-runner" />
+    <option name="VM_PARAMETERS" value="-Xms128m -Xmx4096m -server -ea -Didea.system.path=/home/alexis/.ScalaChainDebuggerPluginIC/test-system -Didea.config.path=/home/alexis/.ScalaChainDebuggerPluginIC/test-config -Dsbt.ivy.home=/home/alexis/.ivy2 -Dplugin.path=/home/alexis/adYouLike/repositories/scala-stream-debugger/target/plugin/ScalaChainDebugger" />
+    <shortenClasspath name="CLASSPATH_FILE" />
+    <RunnerSettings RunnerId="Debug">
+      <option name="DEBUG_PORT" value="" />
+      <option name="TRANSPORT" value="0" />
+      <option name="LOCAL" value="true" />
+    </RunnerSettings>
+    <RunnerSettings RunnerId="Profile " />
+    <RunnerSettings RunnerId="Run" />
+    <ConfigurationWrapper RunnerId="Debug" />
+    <ConfigurationWrapper RunnerId="Run" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
