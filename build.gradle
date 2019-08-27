@@ -23,5 +23,5 @@ repositories {
 }
 
 dependencies {
-x    implementation 'org.scala-lang:scala-library:2.12.7'
+    implementation 'org.scala-lang:scala-library:2.12.7'
 }
