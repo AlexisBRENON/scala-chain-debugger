@@ -3,5 +3,4 @@
 .sandbox/
 build/
 
-test-project/.idea
-test-project/**/target
+assets/scd_test/
