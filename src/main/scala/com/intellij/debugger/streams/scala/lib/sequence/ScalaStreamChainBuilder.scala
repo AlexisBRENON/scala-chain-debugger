@@ -3,7 +3,7 @@ package com.intellij.debugger.streams.scala.lib.sequence
 import java.util
 
 import com.intellij.debugger.streams.psi.PsiUtil
-import com.intellij.debugger.streams.scala.psi.impl.{ChainBuilderVisitor, ChainDetectorVisitor}
+import com.intellij.debugger.streams.scala.psi.impl.{ChainBuilderVisitor, ChainDetectorVisitor, ScalaChainTransformerImpl}
 import com.intellij.debugger.streams.wrapper.{StreamChain, StreamChainBuilder}
 import com.intellij.psi.PsiElement
 import org.jetbrains.plugins.scala.lang.psi.api.statements.ScPatternDefinition
@@ -32,8 +32,10 @@ class ScalaStreamChainBuilder extends StreamChainBuilder {
     val roots = getRoots(Success(PsiUtil.ignoreWhiteSpaces(startElement)), Seq.empty)
     val visitor = new ChainBuilderVisitor
     roots.foreach(_.accept(visitor))
-    val chains = visitor.chains()
-    Seq.empty[StreamChain].asJava
+    val transformer = new ScalaChainTransformerImpl
+    visitor.chains()
+      .map(chain => transformer.transform(chain.asJava, startElement))
+      .asJava
   }
 
   @scala.annotation.tailrec

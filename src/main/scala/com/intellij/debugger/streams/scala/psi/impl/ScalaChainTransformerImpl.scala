@@ -5,21 +5,21 @@ import java.util
 import com.intellij.debugger.streams.psi.ChainTransformer
 import com.intellij.debugger.streams.scala.trace.dsl.ScalaTypes
 import com.intellij.debugger.streams.trace.impl.handler.`type`.GenericType
+import com.intellij.debugger.streams.wrapper.impl._
 import com.intellij.debugger.streams.wrapper.{CallArgument, IntermediateStreamCall, QualifierExpression, StreamChain}
-import com.intellij.debugger.streams.wrapper.impl.{CallArgumentImpl, IntermediateStreamCallImpl, QualifierExpressionImpl, StreamChainImpl, TerminatorStreamCallImpl}
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import org.jetbrains.plugins.scala.conversion.ast.QualifiedExpression
-import org.jetbrains.plugins.scala.lang.psi.api.expr.{ScExpression, ScMethodCall, ScReferenceExpression}
+import org.jetbrains.plugins.scala.lang.psi.api.expr.{MethodInvocation, ScExpression, ScReferenceExpression}
 
-import scala.collection.mutable
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 
-class ScalaChainTransformerImpl extends ChainTransformer[ScMethodCall] {
+class ScalaChainTransformerImpl extends ChainTransformer[MethodInvocation] {
   private val typeExtractor = new DummyTypeExtractor
 
-  override def transform(_callChain: util.List[ScMethodCall], context: PsiElement): StreamChain = {
-    val callChain: Seq[ScMethodCall] = _callChain.asScala
+  override def transform(_callChain: util.List[MethodInvocation], context: PsiElement): StreamChain = {
+    val callChain: Seq[MethodInvocation] = _callChain.asScala
     val intermediateCalls = mutable.ListBuffer.empty[IntermediateStreamCall]
     callChain.dropRight(1).foreach { call =>
       val (typeBefore, typeAfter) = typeExtractor.extractIntermediateCallTypes(call)
@@ -47,7 +47,7 @@ class ScalaChainTransformerImpl extends ChainTransformer[ScMethodCall] {
     new StreamChainImpl(qualifier, intermediateCalls.asJava, terminationCall, context)
   }
 
-  private def createCallArgument(callExpression: ScMethodCall)(arg: ScExpression): CallArgument = {
+  private def createCallArgument(callExpression: MethodInvocation)(arg: ScExpression): CallArgument = {
     new CallArgumentImpl("Dummy", "Dummy")
   }
 
@@ -62,6 +62,6 @@ class ScalaChainTransformerImpl extends ChainTransformer[ScMethodCall] {
 }
 
 class DummyTypeExtractor {
-  def extractIntermediateCallTypes(call: ScMethodCall): (GenericType, GenericType) =
+  def extractIntermediateCallTypes(call: MethodInvocation): (GenericType, GenericType) =
     (ScalaTypes.list(ScalaTypes.getANY), ScalaTypes.list(ScalaTypes.getANY))
 }

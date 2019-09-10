@@ -1,23 +1,22 @@
 package com.intellij.debugger.streams.scala.util
 
-import com.intellij.psi.PsiMethodCallExpression
-import org.jetbrains.plugins.scala.lang.psi.api.expr.ScMethodCall
+import org.jetbrains.plugins.scala.lang.psi.api.expr.ScExpression
 
 trait ScChainDetector {
 //  def isStartingCall(expr: PsiMethodCallExpression): Boolean
-  def isTerminationCall(call: ScMethodCall): Boolean
-  def isIntermediateCall(call: ScMethodCall): Boolean
-  def isStreamCall(call: ScMethodCall): Boolean =
-    isIntermediateCall(call) || isTerminationCall(call)
+  def isTerminationCall(expr: ScExpression): Boolean
+  def isIntermediateCall(expr: ScExpression): Boolean
+  def isStreamCall(expr: ScExpression): Boolean =
+    isIntermediateCall(expr) || isTerminationCall(expr)
 }
 
 object ScChainDetector extends ScChainDetector {
   private val traversableChainDetector = ScTraversableChainDetector
   private val subDetectors = Set(traversableChainDetector)
 
-  override def isIntermediateCall(call: ScMethodCall): Boolean =
-    subDetectors.exists(_.isIntermediateCall(call))
+  override def isIntermediateCall(expr: ScExpression): Boolean =
+    subDetectors.exists(_.isIntermediateCall(expr))
 
-  override def isTerminationCall(call: ScMethodCall): Boolean =
-    subDetectors.exists(_.isTerminationCall(call))
+  override def isTerminationCall(expr: ScExpression): Boolean =
+    subDetectors.exists(_.isTerminationCall(expr))
 }
